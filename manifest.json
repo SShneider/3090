@@ -1,0 +1,15 @@
+{"manifest_version": 2,
+    "name":"3090 Finder",
+    "description": "Find 3090 to play WoW Shadowlands with 300 fps",
+    "version": "0.01",
+    "permissions": [
+        "activeTab"
+      ],
+    "content_scripts":[{
+        "matches": ["https://www.newegg.com/p/*"],
+        "js":["simpleTool.js"]
+    }],
+    "web_accessible_resources": [
+        "Alarm01.wav"
+    ]
+    }
