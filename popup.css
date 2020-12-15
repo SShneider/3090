@@ -1,0 +1,32 @@
+body{
+    width: 300px;
+}
+button{
+    margin-top: 15px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    background-color: turquoise;
+    border-color: black;
+    font-weight: bold;
+}
+button:hover{
+    background-color: teal;
+    color:white;
+    font-weight: bold;
+}
+input[type=number]{
+    width: 30px;
+}

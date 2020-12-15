@@ -1,15 +1,23 @@
 {"manifest_version": 2,
-    "name":"3090 Finder",
-    "description": "Find 3090 to play WoW Shadowlands with 300 fps",
+    "name":"3080 Finder",
+    "description": "Find 3080 to play WoW Shadowlands with 300 fps",
     "version": "0.01",
     "permissions": [
+        "tabs",
         "activeTab"
       ],
+    "browser_action":{
+        "default_popup":"popup.html"
+    },
+    "web_accessible_resources": [
+        "Alarm01.wav"
+    ],
+    "background":{
+        "scripts": ["background.js"],
+        "persistent": false
+    },
     "content_scripts":[{
         "matches": ["https://www.newegg.com/p/*"],
         "js":["simpleTool.js"]
-    }],
-    "web_accessible_resources": [
-        "Alarm01.wav"
-    ]
-    }
+    }]
+}
