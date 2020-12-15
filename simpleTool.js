@@ -1,5 +1,6 @@
-const settingStorage = window.sessionStorage 
-
+const settingStorage = window.sessionStorage
+let details = false
+const myAudio = new Audio(chrome.runtime.getURL("Alarm01.wav"))
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse)=>{
         if(request.start){
@@ -11,12 +12,13 @@ chrome.runtime.onMessage.addListener(
         }
     }
 )
-
+// if(window.location.pathname==="/shop/cart" ){
+//     window.setTimeout(addToCart(document.getElementsByClassName("btn-wide")), 1000)
+// }
 hunt3080()
 
 function hunt3080(){
     const userChoices = loadFromStorage()
-    console.log(userChoices)
     if(!userChoices){
         //error("sTl")
         return 0
@@ -31,6 +33,8 @@ function hunt3080(){
         userChoices.startTime = userChoices.startTime+userChoices.durationBatch+userChoices.breakLength
         settingStorage.setItem("OMR3080", JSON.stringify(userChoices))
         window.setTimeout(hunt, delay)
+    }else{
+        sendMessageEnd()
     }
 }
 
@@ -58,17 +62,45 @@ function error(lineErr){
 
 function hunt(){
     const addToCartButtons = document.getElementsByClassName("btn-primary")
-    var myAudio = new Audio(chrome.runtime.getURL("Alarm01.wav"))
+    const viewDetailsButtons = document.getElementsByClassName("btn-mini")
     let flag = false
+    let addCartButtonArray = []
     if (addToCartButtons.length){
         for(let i = 0; i<addToCartButtons.length; i++){
-            if(addToCartButtons[i].innerText === "ADD TO CART "){
+            if(addToCartButtons[i].innerText.toUpperCase() === "ADD TO CART "){
                 flag = true
+                addCartButtonArray.push(addToCartButtons[i])
+            }
+        }
+    }
+    details = !flag
+    if(!flag||userChoices.stopMultiple){
+        if (viewDetailsButtons.length){
+            for(let i = 0; i<viewDetailsButtons.length; i++){
+                if(viewDetailsButtons[i].innerText.toUpperCase() === "VIEW DETAILS "){
+                    flag = true
+                    addCartButtonArray.push(viewDetailsButtons[i])
+                }
             }
         }
     }
     if(flag){
-        myAudio.play()
+        sendMessageEnd()
+        if(addCartButtonArray.length>1 && userChoices.stopMultiple || !userChoices.addToCart){
+            if(userChoices.playSound) myAudio.play()
+            addCartButtonArray[0].focus()
+        }else if(userChoices.addToCart){
+            console.log("Details: ", details)
+            if(details) chrome.runtime.sendMessage({addToCart:true})
+            if(userChoices.playSound) myAudio.play()
+            const addedSingle = addToCart(addCartButtonArray)
+            if(addedSingle){
+                let stepTwoAddCartButtons = document.getElementsByClassName("btn-undefined")
+                if(stepTwoAddCartButtons.length){
+                    window.setTimeout(() => addToCart(stepTwoAddCartButtons), 2000)
+                }
+            }
+        }
     }else{
         window.location.reload()
     }
@@ -76,4 +108,16 @@ function hunt(){
 
 function randomInterval(min, max){
     return Math.floor(Math.random()*(max-min+1)) + min
+}
+
+function addToCart(buttonIn){
+    const evObj = document.createEvent('Events')
+    evObj.initEvent('click', true, false)
+    buttonIn[0].dispatchEvent(evObj)
+    if(userChoices.stopMultiple && !addToCartButtons.length) return 0
+    return 1
+}
+
+function sendMessageEnd(){
+    chrome.runtime.sendMessage({found:true})
 }

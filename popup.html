@@ -9,12 +9,13 @@
 <body>
     <form id="settingsForm">
         <input type = "checkbox" id="toCart"> <label for="toCart">Add item to cart if available</label><br>
+        <input type = "checkbox" id="processMultiple"> <label for="processMultiple">Dont add to cart if there is choice</label><br>
         <input type = "checkbox" id="sound" checked> <label for="sound">Play sound when found</label><br>
         <input type = "checkbox" id="toFront"> <label for="toFront">Bring window to front when found</label><br>
         <label for = "refreshTime">Refresh between every (seconds): </label> <input type = "number" id = "refreshMin" value = 3> <input type = "number" id = "refreshMax" value = 5><br>
         <label for = "totalRuntime">Run this for (hours): </label><input type = "number" id="totalRuntime" value = 3><br>
         <label for = "batchRuntime">Taking breaks every (minutes): </label> <input type = "number" id = "batchRuntime" value = 45><br>
-        <lable for = "breakDuration">Break duration (minutes): </lable> <input type = "number" id ="breakDuration" value = 15><br>
+        <label for = "breakDuration">Break duration (minutes): </label> <input type = "number" id ="breakDuration" value = 15><br>            
         <button type = "submit" id="start">START</button><br>
     </form>
     <script src = "complexTool.js"></script>
