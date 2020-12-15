@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(
             if(request.addToCart){
                 window.setTimeout(()=>chrome.tabs.sendMessage(sender.tab.id, {addToCart:true}), 5000)
             }
-            if(request.found){
+            if(request.found && request.toFront){
                 chrome.windows.update(sender.tab.windowId, {focused: true})
             }
         })()

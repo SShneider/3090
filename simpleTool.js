@@ -119,5 +119,5 @@ function addToCart(buttonIn){
 }
 
 function sendMessageEnd(){
-    chrome.runtime.sendMessage({found:true})
+    chrome.runtime.sendMessage({found:true, toFront: userChoices.windowUp})
 }
